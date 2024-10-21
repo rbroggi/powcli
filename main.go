@@ -39,7 +39,7 @@ func main() {
 	}
 	uuidBytes := parsedUUID[:]
 
-	fmt.Sprintf("File data hash: %x\n", fileDataHash)
+	fmt.Printf("File data hash: %x\n", fileDataHash)
 	fmt.Printf("UUID bytes: %v\n", uuidBytes)
 	fmt.Printf("difficulty string: %d\n", *difficulty)
 	fmt.Printf("Solution: %d\n", PoW(append(fileDataHash[:], uuidBytes...), uint32(*difficulty)))
