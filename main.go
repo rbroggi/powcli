@@ -48,9 +48,9 @@ func main() {
 // PoW is a simple proof of work function that takes a byte slice and a difficulty
 // and returns a nonce that satisfies the difficulty.
 // The difficulty is the number of leading zeros bits in the hash of the input and nonce.
-func PoW(input []byte, difficulty uint32) uint32 {
-	for nonce := uint32(0); ; nonce++ {
-		hash := sha256.Sum256(append(Uint32ToBytes(nonce), input...))
+func PoW(input []byte, difficulty uint32) uint64 {
+	for nonce := uint64(0); ; nonce++ {
+		hash := sha256.Sum256(append(Uint64ToBytes(nonce), input...))
 		if checkDifficulty(hash[:], difficulty) {
 			return nonce
 		}
@@ -58,9 +58,9 @@ func PoW(input []byte, difficulty uint32) uint32 {
 	}
 }
 
-func Uint32ToBytes(n uint32) []byte {
+func Uint64ToBytes(n uint64) []byte {
 	bytes := make([]byte, 8)
-	binary.BigEndian.PutUint32(bytes, n)
+	binary.BigEndian.PutUint64(bytes, n)
 	return bytes
 }
 
