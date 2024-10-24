@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"flag"
 	"fmt"
 	"log"
@@ -38,9 +39,10 @@ func main() {
 		log.Fatalf("Failed to parse UUID: %v", err)
 	}
 	uuidBytes := parsedUUID[:]
-
+	zeroDifficulty := sha256.Sum256(append(fileDataHash[:], uuidBytes...))
 	fmt.Printf("File data hash: %x\n", fileDataHash)
-	fmt.Printf("UUID bytes: %v\n", uuidBytes)
+	fmt.Printf("user-id uuid bytes: %v\n", uuidBytes)
+	fmt.Printf("Hex(hash(segment hash | user-id)): %s\n", hex.EncodeToString(zeroDifficulty[:]))
 	fmt.Printf("difficulty string: %d\n", *difficulty)
 	fmt.Printf("Solution: %d\n", PoW(append(fileDataHash[:], uuidBytes...), uint32(*difficulty)))
 }
